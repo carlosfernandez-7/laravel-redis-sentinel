@@ -27,7 +27,8 @@ class RetryManager
         'loading',
         'readonly',
         "can't write against a read only replica",
-        "connection timed out"
+        "connection timed out",
+        "noreplicas"
     ];
 
     /**
@@ -38,6 +39,8 @@ class RetryManager
         'getaddrinfo',
         'name or service not known',
     ];
+
+    private int $nextSentinelIndex = 0;
 
     /**
      * Attempt to retry the provided operation when the client fails to connect
@@ -138,6 +141,14 @@ class RetryManager
         }
 
         return false;
+    }
+
+    /**
+     * Get the next sentinel index and increment it.
+     */
+    public function getNextSentinelIndex(): int
+    {
+        return $this->nextSentinelIndex++;
     }
 
     /**

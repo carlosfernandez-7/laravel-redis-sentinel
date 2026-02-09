@@ -111,6 +111,15 @@ class PhpRedisSentinelConnector extends PhpRedisConnector
         $exception = null;
         $hosts = $config['sentinel_hosts'] ?? [];
 
+        $hostCount = count($hosts);
+        if ($hostCount > 0) {
+            $start = $this->retryManager->getNextSentinelIndex() % $hostCount;
+            $hosts = array_merge(
+                array_slice($hosts, $start),
+                array_slice($hosts, 0, $start)
+            );
+        }
+
         foreach ($hosts as $host) {
             $hostConfig = array_merge($config, [
                 'sentinel_host' => $host['host'] ?? null,
