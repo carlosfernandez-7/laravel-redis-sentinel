@@ -1,6 +1,9 @@
 {
-    "name": "namoshek/laravel-redis-sentinel",
+    "name": "cfernandez777/laravel-redis-sentinel",
     "description": "An extension of Laravels Redis driver which supports connecting to a Redis master through Redis Sentinel.",
+    "replace": {
+        "namoshek/laravel-redis-sentinel": "self.version"
+    },
     "keywords": [
         "laravel",
         "redis"
